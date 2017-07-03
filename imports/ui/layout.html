@@ -1,0 +1,29 @@
+<template name="layout">
+
+  <body>
+     {{#if currentUser}}
+    <div class='row' >
+    {{> headerNav}}
+    </div>
+     <div style="height:45px"></div>
+  <div class='row' >
+    <div class="col-md-3" >
+       {{> mainNav}}
+    </div>
+
+  <div class='row'>
+    <div class="col-md-3">
+       {{> yield }}
+    </div>
+  </div>
+    </div>
+    {{else}}
+          <title>Labor-X-Change</title>
+          <p class="text-right"> {{> loginButtons align="right"}}  </p>
+      {{/if}}
+</body>
+</template>
+
+<!--     <div class="col-sm-8">
+      {{> jobfeed}}
+    </div> -->

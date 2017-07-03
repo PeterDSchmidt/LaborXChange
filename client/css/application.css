@@ -1,0 +1,12 @@
+
+
+.panel-borderless {
+  border: 0;
+  box-shadow: none;
+}
+
+.list-borderless {
+  border: 0;
+  box-shadow: none;
+}
+
