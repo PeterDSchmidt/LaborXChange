@@ -60,6 +60,16 @@ Router.route('/MyJobs', function () {
    this.layout('layout');
 });
 
+Router.route('/HowTo', function () {
+             this.render('howto');
+             this.layout('layout');
+             });
+
+Router.route('/MyAccount', function () {
+             this.render('myaccount');
+             this.layout('layout');
+             });
+
 Router.route('/SelectHelpers/:_id', function () {
   console.log(this.params._id);
   this.render('selecthelpers', {data: {_id: this.params._id}});
