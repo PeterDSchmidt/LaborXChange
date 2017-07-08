@@ -169,8 +169,10 @@ Template.myjobfeed.helpers({
 });
 
 Template.signedupjobs.helpers({
-  jobs() {
-    return Jobs.find({owner: Meteor.userId()});
+                              // need to change this to bring back jobs that I have hours assigned to
+  helperjobs() {
+    return Helperjobs.find({helper: Meteor.userId()});
+                              console.log('Id: ' + this._id);
   },
 });
 
