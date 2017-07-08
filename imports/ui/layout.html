@@ -9,17 +9,30 @@
     <div class='row' >
         <div class="col-md-6">
             <h3><p>Things to work on:</p>
-            <p>Close job screen needs to be created</p>
+            <p></p>
         
             <p>I need an invite system. or a rating system or perhaps a trust system. This person is trusted by...,</p>
             
             <p> on job sign up - jobs already signed up for should not appear</p>
             
-               <p> Currently jobs signed up for looks just a list of jobs that I have posted not signed up forr</p>
+               <p> Change jobs signed up for so that job name shows and so that the hours assigned can be changed.
+               
+               Template.signedupjobs.helpers({
+               // need to change this to bring back jobs that I have hours assigned to
+               
+               jobs() {
+               
+               var job = helperjobs.findOne({helper: Meteor.userId()});
+               console.log('test: ' + job._id);
+               return jobs.find({_id: job._id});
+               console.log('Id: ' + this._id);
+               },
+               });
+               </p>
             </h3>
         </div>
          </div>
-     
+    
          <div class='row' >
     <div class="col-md-3" >
        {{> mainNav}}
