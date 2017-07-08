@@ -224,6 +224,7 @@ Template.editjob.helpers({
 });
 
 
+
 Template.editjob.events({
 
      'submit form': function(event){
@@ -277,11 +278,14 @@ Template.closejobs.helpers({
 });
 
 Template.closejob.helpers({
-  helperjobs() {
-    console.log('Id: ' + this._id);
-    return Helperjobs.find({_id: this._id});
-  },
-});
+                         jobs() {
+                          console.log('Id: ' + this._id);
+                          return Jobs.find({_id: this._id});},
+                          helperjobs() {
+                          // return Helperjobs.find({owner: Meteor.userId()});
+                          return Helperjobs.find({job: this._id});},
+                          
+                         });
 
 Template.closejob.events({
   'submit form': function(event) {

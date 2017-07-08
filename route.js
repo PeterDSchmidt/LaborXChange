@@ -27,11 +27,11 @@ Router.route('/CloseJobs', function () {
   this.render('closejobs');
   this.layout('layout');
 });
-
 Router.route('/CloseJob/:_id', function () {
-  this.render('closejob', {data: {_id: this.params._id}});
-  this.layout('layout');
-});
+             console.log(this.params._id);
+             this.render('closejob', {data: {_id: this.params._id}});
+             this.layout('layout');
+             });
 
 Router.route('/SignUp/:_id', function () {
   this.render('signup', {data: {_id: this.params._id}});
