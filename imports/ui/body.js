@@ -144,7 +144,7 @@ Template.addhelpertojob.events({
   },
 });
 
-Template.jobfeed.helpers({
+Template.alljobs.helpers({
   jobs() {
     return Jobs.find({ owner: { $ne: Meteor.userId() } });
   },

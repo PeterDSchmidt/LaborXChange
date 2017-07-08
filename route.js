@@ -51,7 +51,7 @@ Router.route('/EditJob/:_id', function () {
 });
 
 Router.route('/AllJobs', function () {
-  this.render('jobfeed');
+  this.render('alljobs');
   this.layout('layout');
 });
 
