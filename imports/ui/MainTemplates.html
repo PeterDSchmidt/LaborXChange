@@ -48,11 +48,19 @@
     </div>
     <div class='row'>
         <ul>
-            {{#each jobs}}
-            {{> postedjob}}
+            {{#each helperjobs}}
+            {{> signedupjob}}
             {{/each}}
         </ul>
     </div>
+</template>
+
+<!--  template Description - called by jobfeed to fill in list of jobs to sign up for-->
+<template name="signedupjob">
+    <span class="job"><a data-class="linked-name"  href=/SignUp/{{_id}}>
+        <span class="notranslate">{{job}}</span></a>
+    </span>
+    <li>{{hours}}</li>
 </template>
 
 <!--  template Description - First Screen for My Posted Jobs -->
