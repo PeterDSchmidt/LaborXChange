@@ -20,14 +20,7 @@
                Template.signedupjobs.helpers({
                // need to change this to bring back jobs that I have hours assigned to
                
-               jobs() {
-               
-               var job = helperjobs.findOne({helper: Meteor.userId()});
-               console.log('test: ' + job._id);
-               return jobs.find({_id: job._id});
-               console.log('Id: ' + this._id);
-               },
-               });
+             
                </p>
             </h3>
         </div>
