@@ -12,13 +12,13 @@
     </ul>
 </template>
 
-<!--  template Description - called by jobfeed to fill in list of jobs to sign up for-->
+<!--  template Description - called by alljobs to fill in list of jobs to sign up for-->
 <template name="postedjob">
     <span class="ShortDesc"><a data-class="linked-name"  href=/SignUp/{{_id}}>
         <span class="notranslate">{{ShortDesc}}</span></a>
     </span>
     <li>{{LongDesc}}</li>
-</template>
+ </template>
 
 <!--  template Description - second screen for sign up for a job-->
 <template name="signup">
@@ -37,14 +37,7 @@
         <h3 class="notranslate">Signed up Jobs</h3>
     </div>
     <div class='row'>
-        
-        <!--     I don't think I need this for the list of jobs I have signed up for -->
-        <!--   <form class="navbar-form navbar-left" role="search">
-         <div class="form-group">
-         <input type="text" class="form-control" placeholder="Search for jobs">
-         </div>
-         <button type="submit" class="btn btn-default">Submit</button>
-         </form> -->
+     
     </div>
     <div class='row'>
         <ul>
@@ -55,13 +48,13 @@
     </div>
 </template>
 
-<!--  template Description - called by jobfeed to fill in list of jobs to sign up for-->
+<!--  template Description - called by signedupjobs to fill in list of jobs to sign up for-->
 <template name="signedupjob">
     <span class="job"><a data-class="linked-name"  href=/SignUp/{{_id}}>
-        <span class="notranslate">{{job}}</span></a>
+        <span class="notranslate">{{ShortDesc}}</span></a>
     </span>
-    <li>{{hours}}</li>
-</template>
+     <li>{{LongDesc}}</li>
+    <li>You are signed up for {{hours}} hours</li></template>
 
 <!--  template Description - First Screen for My Posted Jobs -->
 <template name="myjobfeed">
@@ -82,6 +75,57 @@
             {{> job}}
             {{/each}}
         </ul>
+    </div>
+</template>
+
+<!-- First screen for Post a job -->
+<template name="createjob">
+    <div class='row'>
+        <h3 class="notranslate">Create a Job</h3>
+    </div>
+    <div class='row'>
+        <form class="new-job" >
+           
+            <div class='row'>
+                <textarea name="shortdesc" placeholder="Job Name" rows="1" style="width: 100%"></textarea>
+            </div>
+            <div class='row'>
+                <textarea name="longdesc" placeholder="Job detail" rows="4" style="width: 100%"></textarea>
+            </div>
+
+<!--
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                          $('#datetimepicker1').datetimepicker();
+                          });
+                        </script>
+                </div>
+            </div>
+            
+ -->
+            <div class='row' style="text-align:right"> <input type="submit" value="submit" > </div>
+        </form>
+    </div>
+    <div class='row'>
+        <!--      align = "top" style="height:200px; width: 100%;"  -->
+        
+        <!--   <ul>
+         {{#each jobs}}
+         {{> job}}
+         {{/each}}
+         </ul> -->
     </div>
 </template>
 
@@ -141,45 +185,19 @@
 
 
 
-<!--  template Description - First screen triggered by Close a Job navigation. Calls jobcloser to fill list of jobs. -->
-<template name="closejobs">
-    <div class='row'>
-        <h3 class="notranslate">Close Jobs</h3>
-    </div>
-    <div class='row'>
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search for jobs">
-                    </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-    </div>
-    <div class='row'>
-        <ul>
-            {{#each jobs}}
-            {{> jobcloser}}
-            {{/each}}
-        </ul>
-    </div>
-
-</template>
-
-<template name="jobcloser">
-    <span class="ShortDesc"><a data-class="linked-name"  href=/CloseJob/{{_id}}>
-        <span class="notranslate">{{ShortDesc}}</span></a>
-    </span>
-    <li>{{LongDesc}}</li>
-   
-</template>
 
 
-<!--  template Description - Second Screen for My Posted Jobs allowing editing the job-->
+
+<!--  template Description - Second Screen for Closing Jobs allowing editing the hours-->
 <template name="closejob">
-    <h3 class="notranslate">Close Job by assigning credit hours to each helper. You can also change the descritpion of the job if you need to add additional notes</h3>
+    <h3 class="notranslate">Close Job </h3>
+    
     {{#each jobs}}
     <form class="edit-job">
-         <span class="notranslate">{{ShortDesc}}</span>
-            <input type="text" value="{{LongDesc}}" name="longdesc">
+<div class='row'>
+    <span class="notranslate">{{ShortDesc}}</span>
+    </div>
+
                 <div class="container">
                     <div class="panel-group">
                         <div class="panel panel-borderless" >
@@ -213,44 +231,48 @@
 </template>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<template name="createjob">
- <div class='row'>
-       <h3 class="notranslate">Create a Job</h3>
+<!--  template Description - First screen triggered by Close a Job navigation. Calls jobcloser to fill list of jobs. -->
+<template name="closejobs">
+    <div class='row'>
+        <h3 class="notranslate">Close Jobs</h3>
     </div>
-  <div class='row'>
-    <form class="new-job" >
-      <div class='row'>
-        <input type="text" name="shortdesc"  placeholder="Job Name" style=" width: 100%;"/>
-      </div>
-      <div class='row'>
-        <textarea name="longdesc" placeholder="Job detail" rows="4" style="width: 100%"></textarea>
-      </div>
-      <div class='row' style="text-align:right"> <input type="submit" value="submit" > </div>
-      </form>
-  </div>
-   <div class='row'>
-<!--      align = "top" style="height:200px; width: 100%;"  -->
-
-<!--   <ul>
-      {{#each jobs}}
-        {{> job}}
-      {{/each}}
-      </ul> -->
-   </div>
+    <div class='row'>
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search for jobs">
+                    </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    <div class='row'>
+        <ul>
+            {{#each jobs}}
+            {{> jobcloser}}
+            {{/each}}
+        </ul>
+    </div>
+    
 </template>
+
+<template name="jobcloser">
+    <span class="ShortDesc"><a data-class="linked-name"  href=/CloseJob/{{_id}}>
+        <span class="notranslate">{{ShortDesc}}</span></a>
+    </span>
+    <li>{{LongDesc}}</li>
+    
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <template name="helper">

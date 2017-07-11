@@ -209,6 +209,8 @@ Template.signup.events({
     Helperjobs.insert({
      helper: Meteor.userId(),
       job: this._id,
+      ShortDesc: this.ShortDesc,
+      LongDesc: this.LongDesc,
       hours: hours,
     });
 
