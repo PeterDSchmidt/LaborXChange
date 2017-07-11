@@ -211,6 +211,7 @@ Template.signup.events({
       job: this._id,
       ShortDesc: this.ShortDesc,
       LongDesc: this.LongDesc,
+      HelperName: Meteor.user().username,
       hours: hours,
     });
 

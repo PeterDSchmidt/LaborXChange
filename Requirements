@@ -1,0 +1,30 @@
+Phase 1
+
+Sign up for a job ; Jobs already signed up for should not appear
+
+jobs signed up for should list job names
+
+Close a job needs to allow final hours to be assigned to each helper, the job should be marked closed.
+
+My Account should aggregate credits from all signed up and closed jobs - my jobs that are closed labor total.
+
+
+
+
+Phase 2:
+
+The ability to advertise your own services
+
+Need a trust system so that no one gets mugged - Perhaps like Facebook or a rating system or a list of folks that have used an individual. It is important that this is not a barrier to entry.
+
+Under Consideration:
+
+Do we need to allow a job poster to add helpers that they choose not just those that have signed up?
+
+
+Notes
+
+I am not sure I need to have the helper sign up for hours. Perhaps only a sign up is sufficient then at close the hours are assigned. I could require a date be provided and a location, but perhaps that is to restrictive. Also might be a security issue if the location is listed prior to the sign up. ..
+
+I have code commented out for a date picker as part of post a job. At some point I may want it.
+
