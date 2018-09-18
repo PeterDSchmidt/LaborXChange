@@ -53,7 +53,7 @@ import { Jobsnohelpers } from '../imports/api/jobs.js';
   Meteor.publish("Jobsnohelpers", function (args) {
     var sub = this;
     var db = MongoInternals.defaultRemoteCollectionDriver().mongo.db;
-    const a = new array;
+    const a = new event;
     // Your arguments to Mongo's aggregation. Make these however you want.
     var pipeline = [
          { $lookup:
