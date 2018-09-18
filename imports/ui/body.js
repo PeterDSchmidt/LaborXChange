@@ -1,12 +1,17 @@
 import { Template } from 'meteor/templating';
 
+import { Mongo } from 'meteor/mongo';
+
+//Imports are required so that the client has a definition of the collection
 import { Jobs } from '../api/jobs.js';
 
 import { Helpers } from '../api/jobs.js';
 
 import { Helperjobs } from '../api/jobs.js';
 
-import {Accounts} from '../api/accounts-config.js';
+
+import {Accounts} from '../api/accounts-config.js'; 
+//testing this out
 
 // import './body.html';
 import './layout.html';
@@ -16,9 +21,22 @@ import './HeaderNav.html';
 // import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-// if(Meteor.isClient){ -- Not sure whether to use this or not
+ Meteor.subscribe("Jobs");
+ 
+ Meteor.subscribe("Helpers");
+ 
+ Meteor.subscribe("Helperjobs");
+ 
+ //this also looks fine
+ Meteor.subscribe("Jobsnohelpers", Session.get("_id"));
+ const jobsnohelpers = new Mongo.Collection('Jobsnohelpers');
+ console.log(jobsnohelpers);
+// console.log(jobsnohelpers.find().fetch();
+// console.log(server_collection_Jobsnohelpers.find().fetch())
+//  console.log(Jobsnohelpers);
+//  console.log(Jobsnohelpers.find().fetch());
 
-
+ 
 Template.createjob.events({
   'submit form': function(event) {
     // Prevent default browser form submit
@@ -111,12 +129,19 @@ Template.selecthelpers.events({
   },
 });
 
+// Template.selecthelpers.helpers({
+//   helpers() {
+// //     console.log('Id: ' + this._id);
+//     return Helpers.find({owner: Meteor.userId()});
+//   },
+// });
+
 Template.selecthelpers.helpers({
-  helpers() {
-//     console.log('Id: ' + this._id);
-    return Helpers.find({owner: Meteor.userId()});
+  helpers: function(){
+          return Helpers.find({owner: Meteor.userId()});
   },
 });
+        
 
 Template.addhelpertojob.events({
   'submit form': function(event) {
@@ -144,11 +169,67 @@ Template.addhelpertojob.events({
   },
 });
 
+// if(Meteor.isClient){ 
+
+// Template.body.onCreated(function () {
+//   Meteor.subscribe("jobsnohelpers"); 
+// });
+// }
+
+// 
+  // jobs () {
+  //   Meteor.subscribe("Jobs")
+  
+  // helpers() {
+  //   return Helpers.find({ owner: Meteor.userId() } );
+  // },
+
 Template.alljobs.helpers({
+    
+    //This line is not causing the issue
+      jobsnohelpers () {
+          //This call is bringing back an empty collection
+          
+         var temp = jobsnohelpers.find();
+         console.log(temp);
+         return jobsnohelpers.find();
+      },
+
+});
+
+Template.myjobfeed.helpers({
+   
   jobs() {
-    return Jobs.find({ owner: { $ne: Meteor.userId() } });
+      var temp = Jobs.find({owner: Meteor.userId()});
+     
+      console.log(temp);
+    
+    return Jobs.find({owner: Meteor.userId()});
   },
 });
+
+// Template.alljobs.helpers({
+//   Meteor.subscribe("jobsnohelpers"),
+//   jobsnohelpers.find().fetch();
+  
+// //   jobs() {
+// //   var temp = Jobs.aggregate([{
+// //   $lookup: {
+// //     from: "helperjobs",
+// //     localField: "_id",
+// //     foreignField: "job",
+// //     as: "jobs"
+// //   }},
+// //   {
+// //     $match: { "jobs.HelperName": { $exists: false } }
+// //   }
+// // ])
+ 
+// //     return temp.find({ owner: { $ne: Meteor.userId() } });
+    
+// //   },
+// });
+
 
 // Template.helper.helpers({
 //   helpers() {
@@ -162,17 +243,12 @@ Template.helperlist.helpers({
   },
 });
 
-Template.myjobfeed.helpers({
-  jobs() {
-    return Jobs.find({owner: Meteor.userId()});
-  },
-});
 
 Template.signedupjobs.helpers({
                               // need to change this to bring back jobs that I have hours assigned to
   helperjobs() {
     return Helperjobs.find({helper: Meteor.userId()});
-                              console.log('Id: ' + this._id);
+                              
   },
 });
 
