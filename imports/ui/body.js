@@ -9,7 +9,6 @@ import { Helpers } from '../api/jobs.js';
 
 import { Helperjobs } from '../api/jobs.js';
 
-
 import {Accounts} from '../api/accounts-config.js'; 
 //testing this out
 
@@ -18,24 +17,11 @@ import './layout.html';
 import './sidebar.html';
 import './MainTemplates.html';
 import './HeaderNav.html';
-// import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
  Meteor.subscribe("Jobs");
- 
- Meteor.subscribe("Helpers");
- 
- Meteor.subscribe("Helperjobs");
- 
- //this also looks fine
- Meteor.subscribe("Jobsnohelpers", Session.get("_id"));
- const jobsnohelpers = new Mongo.Collection('Jobsnohelpers');
- console.log(jobsnohelpers);
-// console.log(jobsnohelpers.find().fetch();
-// console.log(server_collection_Jobsnohelpers.find().fetch())
-//  console.log(Jobsnohelpers);
-//  console.log(Jobsnohelpers.find().fetch());
-
+//Meteor.subscribe("Helpers");
+ //Meteor.subscribe("Helperjobs");
  
 Template.createjob.events({
   'submit form': function(event) {
@@ -137,8 +123,13 @@ Template.selecthelpers.events({
 // });
 
 Template.selecthelpers.helpers({
-  helpers: function(){
-          return Helpers.find({owner: Meteor.userId()});
+  helpers(){
+         // return Helpers.find({owner: Meteor.userId()});
+            var temp = Helpers.find();
+            console.log(temp);
+            return temp;
+      
+      
   },
 });
         
@@ -186,14 +177,11 @@ Template.addhelpertojob.events({
 
 Template.alljobs.helpers({
     
-    //This line is not causing the issue
-      jobsnohelpers () {
-          //This call is bringing back an empty collection
-          
-         var temp = jobsnohelpers.find();
-         console.log(temp);
-         return jobsnohelpers.find();
-      },
+   jobs(){
+     var temp = Jobs.find({owner: {$ne: Meteor.userId()}});
+     console.log(temp);
+     return temp;
+   }
 
 });
 
@@ -208,34 +196,6 @@ Template.myjobfeed.helpers({
   },
 });
 
-// Template.alljobs.helpers({
-//   Meteor.subscribe("jobsnohelpers"),
-//   jobsnohelpers.find().fetch();
-  
-// //   jobs() {
-// //   var temp = Jobs.aggregate([{
-// //   $lookup: {
-// //     from: "helperjobs",
-// //     localField: "_id",
-// //     foreignField: "job",
-// //     as: "jobs"
-// //   }},
-// //   {
-// //     $match: { "jobs.HelperName": { $exists: false } }
-// //   }
-// // ])
- 
-// //     return temp.find({ owner: { $ne: Meteor.userId() } });
-    
-// //   },
-// });
-
-
-// Template.helper.helpers({
-//   helpers() {
-//     return Helpers.find({ owner: { $ne: Meteor.userId() } });
-//   },
-// });
 
 Template.helperlist.helpers({
   helpers() {
@@ -246,17 +206,20 @@ Template.helperlist.helpers({
 
 Template.signedupjobs.helpers({
                               // need to change this to bring back jobs that I have hours assigned to
-  helperjobs() {
-    return Helperjobs.find({helper: Meteor.userId()});
-                              
-  },
-});
+//   helperjobs() {
+//     return Helperjobs.find({helper: Meteor.userId()});
+        jobs(){ var temp = Jobs.find({"Helper.HelperName":  Meteor.user().username})   ;
+        console.log(Meteor.user().username);
+        console.log(temp);
+        return temp;
+//   },
+}});
 
 
 Template.job.helpers({
-  helperjobs() {
+  jobs() {
    // return Helperjobs.find({owner: Meteor.userId()});
-    return Helperjobs.find({job: this._id});
+    return Jobs.find({"Helper.Helpername": Meteor.user().username});
      console.log('Id: ' + this._id);
 
     //need to figure out how to send in job Id for this? Or maybe just take it all back and then sort it out in the template?
@@ -278,19 +241,18 @@ Template.signup.events({
     // Get value from form element
     const target = event.target;
     const hours  = target.hours.value;
+    console.log(hours);
 
 
-    // Insert a task into the collection
+    // Insert a helper document into the jobs collection
 
-    Helperjobs.insert({
-     helper: Meteor.userId(),
-      job: this._id,
-      ShortDesc: this.ShortDesc,
-      LongDesc: this.LongDesc,
-      HelperName: Meteor.user().username,
-      hours: hours,
-    });
-
+   Jobs.update({_id: this._id},{$push:{Helper: {"_id": Meteor.userId(), "HelperName": Meteor.user().username, "hours": hours }
+       // ShortDesc: hours
+     //hours1: "I am doing this as a test", - this worked
+     //"helper.$.name": Meteor.user().username,
+     //"helper.$.hours": hours}
+    }});
+console.log(Meteor.userId());
     // Clear form
     target.hours.value = '';
     Router.go ('/MyJobs');
@@ -315,7 +277,7 @@ Template.editjob.events({
      event.preventDefault();
     // Get value from form element
           const target = event.target;
-       console.log(event)
+       console.log(target)
 // //         Session.get('selectedPlayer')
          const shortdesc = event.target.shortdesc.value;
          const longdesc = event.target.longdesc.value;
@@ -355,16 +317,16 @@ Template.editjob.events({
 Template.closejobs.helpers({
   jobs() {
     return Jobs.find({owner: Meteor.userId()});
+   // return Jobs.find({_id: this._id});
   },
 });
 
 Template.closejob.helpers({
                          jobs() {
-                          console.log('Id: ' + this._id);
                           return Jobs.find({_id: this._id});},
-                          helperjobs() {
-                          // return Helperjobs.find({owner: Meteor.userId()});
-                          return Helperjobs.find({job: this._id});},
+                        //   helperjobs() {
+                        //   // return Helperjobs.find({owner: Meteor.userId()});
+                        //   return Helperjobs.find({job: this._id});},
                           
                          });
 
@@ -376,24 +338,41 @@ Template.closejob.events({
 
     // Get value from form element
     const target = event.target;
-    const totalhours = target.totalhours.value;
+    const closed = "closed"
+    console.log(target);
+    const hours = target.hours.value;
+    console.log(hours)
 
-    // update helperjobs with hours
-    Helperjobs.update({_id: this._id},
-     { $set:{
-      //test of User based display
-      totalhours: totalhours,
-    }});
-
+//  !!! I AM ONLY TAKING IN THE FIRST ELEMENT OF THE ARRAY> I NEED TO LOOP THROGH IT
+    //  foreach helper in job = jobID 
+  
+    console.log("Helpers")
+   const  subdocs = Jobs.findOne({"_id" : this._id}).Helper.length;
+   
+   
+   
+   console.log(subdocs)
+   var myhours= document.getElementsByName("hours[]");
+    console.log(myhours[0].value); //Outputs "atrib name 1"
+  
+    
+    for (var i = 0; i < subdocs; i++){
+        // / ,{$push:{Helper: {"_id": Meteor.userId(), "HelperName": Meteor.user().username, "hours": hours }
+        //var x = 'Closed: "closed", ' + 'Helper.' + i + '.hours:' +  '"' + myhours[i].value +'"'
+        var x =  '"Helper.' + i + '.hours": '  + myhours[i].value 
+        
+        console.log(x)
+     Jobs.update({_id: this._id },{$set:{x}}) ;
+    };
     // Clear form
-    target.totalhours.value = '';
+  //  target.hours.value = '';
     Router.go ('/CloseJobs');
 
 
   },
 });
 
-Router.go ('/MyJobs');
+Router.go ('/HomePage');
     // Clear form
 //    target.shortdesc.value = '';
 //     target.longdesc.value = '';

@@ -6,7 +6,7 @@
 <template name="alljobs">
     <h3 class="notranslate">Jobs that you can help with</h3>
     <ul>
-        {{#each jobsnohelpers}}
+        {{#each jobs}}
         {{> postedjob}}
         {{/each}}
     </ul>
@@ -41,7 +41,7 @@
     </div>
     <div class='row'>
         <ul>
-            {{#each helperjobs}}
+            {{#each jobs}}
             {{> signedupjob}}
             {{/each}}
         </ul>
@@ -54,7 +54,12 @@
         <span class="notranslate">{{ShortDesc}}</span></a>
     </span>
      <li>{{LongDesc}}</li>
-    <li>You are signed up for {{hours}} hours</li></template>
+     {{#each Helper}}
+    <li>{{HelperName}} is signed up for {{hours}} hours</li>
+     {{/each}}
+    
+    </template>
+
 
 <!--  template Description - First Screen for My Posted Jobs -->
 <template name="myjobfeed">
@@ -80,18 +85,19 @@
 
 <!-- First screen for Post a job -->
 <template name="createjob">
-    <div class='row'>
-        <h3 class="notranslate">Create a Job</h3>
-    </div>
-    <div class='row'>
-        <form class="new-job" >
-           
-            <div class='row'>
-                <textarea name="shortdesc" placeholder="Job Name" rows="1" style="width: 100%"></textarea>
-            </div>
-            <div class='row'>
-                <textarea name="longdesc" placeholder="Job detail" rows="4" style="width: 100%"></textarea>
-            </div>
+    <div class="container-fluid">
+        <div class='row'>
+            <h3 class="notranslate">Create a Job</h3>
+        </div>
+        <div class='row'>
+            <form class="new-job" >
+               
+                <div class='row'>
+                    <textarea name="shortdesc" placeholder="Job Name" rows="1" style="width: 50%"></textarea>
+                </div>
+                <div class='row'>
+                    <textarea name="longdesc" placeholder="Job detail" rows="4" style="width: 50%"></textarea>
+                </div>
 
 <!--
             <div class="container">
@@ -115,7 +121,7 @@
             </div>
             
  -->
-            <div class='row' style="text-align:right"> <input type="submit" value="submit" > </div>
+            <div class='row' style="text-align:middle"> <input type="submit" value="submit" > </div>
         </form>
     </div>
     <div class='row'>
@@ -126,6 +132,7 @@
          {{> job}}
          {{/each}}
          </ul> -->
+    </div>
     </div>
 </template>
 
@@ -145,9 +152,8 @@
       </div>
       <div id="collapse{{_id}}" class="panel-collapse collapse">
         <ul class="list-group" style="border: none">
-          {{#each helperjobs}}
-        {{> helperjob}}
-<!--          <li class="list-group-item" style="border: none">{{helper}}</li> -->
+          {{#each Helper}}
+          <li class="list-group-item" style="border: none">{{HelperName}}</li> 
           {{/each}}
 <!--           <li class="list-group-item" style="border: none">Two</li>
           <li class="list-group-item" style="border: none">Three</li> -->
@@ -168,7 +174,8 @@
     <form class="edit-job">
         <input type="text" value="{{ShortDesc}}" name="shortdesc">
             <input type="text" value="{{LongDesc}}" name="longdesc">
-                <input type="submit" value="submit">
+            <input type="submit" value="submit">
+            
                     <!--        <input type="delete" value="remove"> -->
                     <button id = "remove" class="remove">Remove</button>
                     <!--          <button id = "submit" class="submit">Submit</button> -->
@@ -196,21 +203,20 @@
     <form class="edit-job">
 <div class='row'>
     <span class="notranslate">{{ShortDesc}}</span>
+     
+    
     </div>
-<h4>Helper Name</h4>
-                                    {{#each helperjobs}}
-{{> helperjob}}
-<h4>Hours Worked </h4>
-                                    <form class="new-job">
-                                        <input type="text" value="{{hours}}" name="hours">
-                                         
-                                                </form>
-                                                                        {{/each}}
-                        
-                <input type="submit" value="submit">
-                    <!--        <input type="delete" value="remove"> -->
-                   
-                    </form>
+       
+            {{#each Helper}}
+            
+                <h4>{{HelperName}}  -- Hours worked</h4>
+                <!--<form class="closejob">-->
+                    <input type="text" value="{{hours}}" name="hours[]" id ="hours">
+                      
+                <!--</form>-->
+            {{/each}}
+                    <input type="submit" value="submit">        
+              </form>
     {{/each}}
     
     
@@ -332,9 +338,12 @@
 </template>
 
 <template name="myaccount">
-    <h3 class="notranslate">My Account -- should show email and credits</h3>
+    <h3 class="notranslate">My Balance</h3>
+     <body>
+        <p>You have 6 credit hours 
+        </p></body>
 </template>
-
+<!--My Account -- should show email and credits -- Perhaps blockchain to track it-->
 
 <template name="howto">
     <h3 class="notranslate">How to Use the Labor Exchange</h3>
@@ -347,6 +356,26 @@
         <p>We have tried to make the website straightforward, but here is a description of the way it works....   TODO
         </p></body>
 </template>
+
+
+
+<template name="homepage">
+    <h3 class="notranslate">Welcome to the Labor-X-Change.</h3>
+</template>
+
+<!--TODO-->
+
+<!--<li class="dropdown">-->
+<!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Helpers<span class="caret"></span></a>-->
+<!--                    <ul class="dropdown-menu">-->
+<!--                        <li><a href="/InvitebyEmail">Invite by email</a></li>-->
+<!--                        <li><a href="/ImportFacebook">Import Facebook friends</a></li>-->
+<!--                        <li><a href="/ImportGoogle">Import Google Plus friends</a></li>-->
+<!--                        <li role="separator" class="divider"></li>-->
+                        
+<!--                       <li><a href="/CurrentHelpers">Current helpers</a></li>-->
+<!--                    </ul>-->
+<!--                 </li>-->
 
 <template name="editprofile">
       <h3 class="notranslate">Edit Profile</h3>

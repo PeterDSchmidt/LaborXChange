@@ -2,34 +2,24 @@
 
   <body>
      {{#if currentUser}}
-    <div class='row' >
-    {{> headerNav}}
-    </div>
-    <div style="height:45px"></div>
-    <div class='row' >
-        <div class="col-md-6">
-          
-        </div>
-         </div>
     
-         <div class='row' >
-    <div class="col-md-3" >
-       {{> mainNav}}
+    {{> headerNav}}
+    <div class="container-fluid">
+        <div class='row' >
+            <div class="col-lg-3" >
+               {{> mainNav}}
+            </div>
+            <div class="col-lg-9">
+               {{> yield }}
+            </div>
+        </div>
     </div>
-
-  <div class='row'>
-    <div class="col-md-3">
-       {{> yield }}
-    </div>
-  </div>
-    </div>
+    
+    
     {{else}}
-          <title>Labor-X-Change</title>
-          <p class="text-right"> {{> loginButtons align="right"}}  </p>
-      {{/if}}
+     {{> headerNav}}
+  
+    {{/if}}
 </body>
 </template>
 
-<!--     <div class="col-sm-8">
-      {{> jobfeed}}
-    </div> -->

@@ -4,9 +4,19 @@ Router.configure({
 });
 
 Router.route('/', function () {
-  this.render('jobfeed');
+  this.render('homepage');
   this.layout('layout');
 });
+
+Router.route('/Homepage', function () {
+  this.render('homepage');
+  this.layout('layout');
+});
+
+// Router.route('/Jobfeed', function () {
+//   this.render('jobfeed');
+//   this.layout('layout');
+// });
 
 Router.route('/CreateJob', function () {
   this.render('createjob');
@@ -29,6 +39,7 @@ Router.route('/CloseJobs', function () {
 });
 Router.route('/CloseJob/:_id', function () {
              console.log(this.params._id);
+             console.log("closejob")
              this.render('closejob', {data: {_id: this.params._id}});
              this.layout('layout');
              });
