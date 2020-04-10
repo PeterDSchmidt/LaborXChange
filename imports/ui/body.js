@@ -247,6 +247,7 @@ Template.signup.events({
     // Insert a helper document into the jobs collection
 
    Jobs.update({_id: this._id},{$push:{Helper: {"_id": Meteor.userId(), "HelperName": Meteor.user().username, "hours": hours }
+   //Jobs.update({_id: this._id},{$push:{Helper: {"_id": Meteor.userId(), "HelperName": Meteor.user().username, "hours" }
        // ShortDesc: hours
      //hours1: "I am doing this as a test", - this worked
      //"helper.$.name": Meteor.user().username,
@@ -341,35 +342,38 @@ Template.closejob.events({
     const closed = "closed"
     console.log(target);
     const hours = target.hours.value;
-    console.log(hours)
+    const name = target.helpername.value;
+    console.log(hours);
+    console.log(name);
 
 //  !!! I AM ONLY TAKING IN THE FIRST ELEMENT OF THE ARRAY> I NEED TO LOOP THROGH IT
     //  foreach helper in job = jobID 
   
-    console.log("Helpers")
+    console.log("Helpers");
    const  subdocs = Jobs.findOne({"_id" : this._id}).Helper.length;
    
    
    
-   console.log(subdocs)
+   console.log(subdocs);
    var myhours= document.getElementsByName("hours[]");
+   var myname= document.getElementsByName("helpername[]");
     console.log(myhours[0].value); //Outputs "atrib name 1"
   
     
     for (var i = 0; i < subdocs; i++){
-        // / ,{$push:{Helper: {"_id": Meteor.userId(), "HelperName": Meteor.user().username, "hours": hours }
-        //var x = 'Closed: "closed", ' + 'Helper.' + i + '.hours:' +  '"' + myhours[i].value +'"'
-        var x =  '"Helper.' + i + '.hours": '  + myhours[i].value 
-        
-        console.log(x)
-     Jobs.update({_id: this._id },{$set:{x}}) ;
-    };
+       var toSet =  'Helper.' + i + '.hours';
+        //console.log(toSet);
+    Jobs.update({_id: this._id},{$set:{[toSet]: myhours[i].value }});
+           
+   // Jobs.update({_id: this._id },{$set:{x}}) ;
+   
+    }
     // Clear form
   //  target.hours.value = '';
     Router.go ('/CloseJobs');
 
 
-  },
+  }
 });
 
 Router.go ('/HomePage');
