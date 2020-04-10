@@ -343,33 +343,18 @@ Template.closejob.events({
     console.log(target);
     const hours = target.hours.value;
     const name = target.helpername.value;
-    console.log(hours);
-    console.log(name);
 
-//  !!! I AM ONLY TAKING IN THE FIRST ELEMENT OF THE ARRAY> I NEED TO LOOP THROGH IT
-    //  foreach helper in job = jobID 
-  
-    console.log("Helpers");
    const  subdocs = Jobs.findOne({"_id" : this._id}).Helper.length;
-   
-   
-   
-   console.log(subdocs);
+
    var myhours= document.getElementsByName("hours[]");
    var myname= document.getElementsByName("helpername[]");
-    console.log(myhours[0].value); //Outputs "atrib name 1"
-  
-    
+
     for (var i = 0; i < subdocs; i++){
        var toSet =  'Helper.' + i + '.hours';
-        //console.log(toSet);
-    Jobs.update({_id: this._id},{$set:{[toSet]: myhours[i].value }});
-           
-   // Jobs.update({_id: this._id },{$set:{x}}) ;
-   
+        Jobs.update({_id: this._id},{$set:{[toSet]: myhours[i].value }});
     }
-    // Clear form
-  //  target.hours.value = '';
+//TODO Assign a closed variable to the job
+
     Router.go ('/CloseJobs');
 
 
