@@ -99,27 +99,7 @@
                     <textarea name="longdesc" placeholder="Job detail" rows="4" style="width: 50%"></textarea>
                 </div>
 
-<!--
-            <div class="container">
-                <div class="row">
-                    <div class='col-sm-6'>
-                        <div class="form-group">
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <script type="text/javascript">
-                        $(function () {
-                          $('#datetimepicker1').datetimepicker();
-                          });
-                        </script>
-                </div>
-            </div>
-            
+ 
  -->
             <div class='row' style="text-align:middle"> <input type="submit" value="submit" > </div>
         </form>
@@ -210,6 +190,7 @@
             {{#each Helper}}
             
                 <h4>{{HelperName}}  -- Hours worked</h4>
+                 <input type="text" value="{{HelperName}}" name="helpername[]" id ="helpername">
                 <!--<form class="closejob">-->
                     <input type="text" value="{{hours}}" name="hours[]" id ="hours">
                       
@@ -338,10 +319,19 @@
 </template>
 
 <template name="myaccount">
-    <h3 class="notranslate">My Balance</h3>
-     <body>
-        <p>You have 6 credit hours 
-        </p></body>
+ <div class='row'>
+        <h3 class="notranslate">Completed Jobs</h3>
+    </div>
+    <div class='row'>
+     
+    </div>
+    <div class='row'>
+        <ul>
+            {{#each jobs}}
+            {{> signedupjob}}
+            {{/each}}
+        </ul>
+    </div>
 </template>
 <!--My Account -- should show email and credits -- Perhaps blockchain to track it-->
 
@@ -353,8 +343,8 @@
         
        <p> The exchange does not have to be between the same people either. You can provide driving services to one person and redeem your credits with someone else for their services.</p>
         
-        <p>We have tried to make the website straightforward, but here is a description of the way it works....   TODO
-        </p></body>
+        
+        </body>
 </template>
 
 
@@ -443,4 +433,24 @@
 
 
 
-
+<!--
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                          $('#datetimepicker1').datetimepicker();
+                          });
+                        </script>
+                </div>
+            </div>
+           --> 
